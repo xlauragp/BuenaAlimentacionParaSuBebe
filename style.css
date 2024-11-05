@@ -1,0 +1,162 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+}
+
+/* Contenedor flipbook con sombra y tamaño responsivo */
+.flipbook {
+    box-shadow: 0 4px 10px #666;
+    width: 90%; /* Se adapta al ancho de la pantalla */
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+/* Página del flipbook */
+#flipbook .page {
+    width: 95%; /* Ajuste para dejar espacio para el borde */
+    height: auto;
+    aspect-ratio: 1 / 1.4; /* Proporción de la página */
+    border: 2px solid #ddd;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    background: url('Turn.js-4th-release/samples/docs/pics/left-border.png') left top no-repeat,
+                url('Turn.js-4th-release/samples/docs/pics/right-border.png') right top no-repeat;
+    background-size: cover;
+}
+
+.page img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+}
+
+/* Página estilo hoja */
+#flipbook .page.sheet {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón para descargar PDF */
+.btn-download {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-download:hover {
+    background: linear-gradient(90deg, #0056b3, #004085);
+    transform: scale(1.05);
+}
+
+/* Centrado en el contenedor */
+.container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+}
+
+/* Estilos para el selector de capítulos */
+.stylish-selector {
+    margin-top: 20px;
+}
+
+.stylish-selector label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4B2A42; /* Color púrpura similar al de la cabecera */
+}
+
+.chapter-select {
+    width: 100%; /* Ajusta para que ocupe el ancho disponible en su contenedor */
+    max-width: auto; /* Limita el ancho máximo si quieres mantenerlo controlado */
+    padding: 8px 16px; /* Ajusta el padding para dar más espacio interno */
+    font-size: 1.1rem; /* Aumenta el tamaño de la fuente */
+    line-height: 1.5; /* Aumenta el alto de línea para evitar el corte del texto */
+    color: #322557; /* Color de texto más oscuro para mejor contraste */
+    border: 2px solid #4B2A42;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+
+.chapter-select:focus {
+    border-color: #38164b; /* Color al hacer foco */
+    box-shadow: 0px 4px 12px rgba(48, 1, 56, 0.546);
+    outline: none;
+}
+
+.stylish-selector select:hover {
+    cursor: pointer;
+}
+
+/* Para dispositivos móviles */
+@media (max-width: 576px) {
+    .navbar-custom .navbar-brand img {
+        width: 120px; /* Reduce el tamaño del logo */
+    }
+    .flipbook {
+        width: 95vw; /* Usa el 95% del ancho de la pantalla */
+    }
+    .container-center {
+        margin-top: 10px;
+    }
+    .btn-download {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    .chapter-select {
+        width: 100%; /* Asegura que ocupe el ancho completo */
+    }
+}
+
+/* Para dispositivos móviles */
+@media (max-width: 576px) {
+    .navbar-custom .navbar-brand img {
+        width: 120px; /* Reduce el tamaño del logo */
+    }
+    .flipbook {
+        width: 95vw; /* Usa el 95% del ancho de la pantalla */
+    }
+    .container-center {
+        margin-top: 10px;
+    }
+    .btn-download {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    .chapter-select {
+        width: 100%; /* Asegura que ocupe el ancho completo */
+    }
+}
+
+/* Ajuste adicional para tablets y pantallas medianas */
+@media (min-width: 577px) and (max-width: 768px) {
+    .flipbook {
+        width: 90%; /* Usa el 90% del ancho de la pantalla */
+    }
+    .chapter-select {
+        width: 90%; /* Ocupa el ancho del contenedor */
+    }
+}
