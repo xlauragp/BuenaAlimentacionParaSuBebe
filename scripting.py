@@ -10,7 +10,7 @@ if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
 # Define la región de recorte (ajusta los valores de acuerdo con el recorte que necesites)
-crop_region = (5, 5, 1760, 1860)
+crop_region = (2, 8, 1760, 1860)
 
 # Procesar todas las imágenes en el directorio de entrada
 for filename in os.listdir(input_folder):
