@@ -1,11 +1,18 @@
 function initFlipbook() {
-    const displayMode = window.innerWidth < 768 ? 'single' : 'double';
+    const aspectRatio = 1 / 1.4; // Proporción de la página
+    const displayMode = window.innerWidth < 1024 ? 'single' : 'double';
+    
+    // Calcular ancho y alto dinámicamente con los límites específicos
+    const width = displayMode === 'single' 
+        ? Math.min(450, window.innerWidth * 0.95) 
+        : Math.min(910, window.innerWidth * 0.9);
+    const height = Math.min(450, width / aspectRatio); // Ajuste del alto basado en el ancho y la relación de aspecto
 
     $("#flipbook").turn({
-        width: displayMode === 'single' ? Math.min(425, window.innerWidth * 0.95) : Math.min(850, window.innerWidth * 0.9), // Ancho ajustado
-        height: Math.min(450, window.innerHeight * 0.6), // Altura ajustada
+        width: width, // Ancho ajustado
+        height: height, // Altura ajustada
         autoCenter: true,
-        display: displayMode // Modo de visualización
+        display: displayMode // Modo de visualización (single o double)
     });
 }
 
@@ -15,16 +22,19 @@ $(document).ready(function() {
 
     // Detectar cambio de tamaño de pantalla
     $(window).on('resize', function() {
-        const newDisplayMode = window.innerWidth < 768 ? 'single' : 'double';
-        
-        $("#flipbook").turn("size", 
-            newDisplayMode === 'single' ? Math.min(425, window.innerWidth * 0.95) : Math.min(850, window.innerWidth * 0.9), 
-            Math.min(450, window.innerHeight * 0.6)
-        );
+        const newDisplayMode = window.innerWidth < 1024 ? 'single' : 'double';
 
+        // Calcular ancho y alto con los límites específicos al redimensionar
+        const width = newDisplayMode === 'single' 
+            ? Math.min(450, window.innerWidth * 0.95) 
+            : Math.min(910, window.innerWidth * 0.9);
+        const height = Math.min(450, width / (1 / 1.4)); // Alto ajustado usando la proporción de la página
+
+        $("#flipbook").turn("size", width, height);
         $("#flipbook").turn("display", newDisplayMode);
     });
 });
+
 
 // Cambiar de página según el capítulo seleccionado
 $('#chapter-select').on('change', function() {
@@ -154,12 +164,3 @@ pages.forEach(page => {
     ctx.strokeStyle = pencilColor;
 });
 
-$(window).on('resize', function() {
-    console.log('Resize triggered', window.innerWidth, window.innerHeight);
-    const newDisplayMode = window.innerWidth < 768 ? 'single' : 'double';
-    $("#flipbook").turn("size", 
-        newDisplayMode === 'single' ? Math.min(425, window.innerWidth * 0.95) : Math.min(850, window.innerWidth * 0.9),
-        Math.min(450, window.innerHeight * 0.6)
-    );
-    $("#flipbook").turn("display", newDisplayMode);
-});
