@@ -47,7 +47,7 @@
     color: white;
     border: none;
     padding: 12px 24px;
-    font-size: 18px;
+    font-size: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: background 0.3s ease, transform 0.2s ease;
@@ -58,16 +58,11 @@
     transform: scale(1.05);
 }
 
-/* Centrado en el contenedor */
 .container-center {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     margin-top: 20px;
-}
-
-.container {
-    max-width: 100%;
 }
 
 .btn {
@@ -81,10 +76,45 @@
     margin-top: 20px;
 }
 
-.stylish-selector label {
-    font-size: 1.2rem;
+/* Estilos para la barra de navegación personalizada */
+.navbar-custom {
+    background-color: #4B2A42; /* Color de fondo específico */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-custom .navbar-brand img {
+    width: 170px; /* Ajuste del logo en tamaño grande */
+}
+
+.navbar-custom .nav-link {
+    color: #fff;
     font-weight: bold;
-    color: #4B2A42; /* Color púrpura similar al de la cabecera */
+    transition: color 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: #f8d7da; /* Color de texto en hover o activo */
+}
+
+/* Icono de la barra de navegación */
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="rgba%28255, 255, 255, 1%29" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .navbar-custom .navbar-brand img {
+        width: 120px; /* Reduce el tamaño del logo */
+    }
+
+    .navbar-custom .nav-link {
+        font-size: 0.9rem; /* Ajusta el tamaño de la fuente en pantallas pequeñas */
+    }
 }
 
 .chapter-select {
@@ -123,27 +153,7 @@
         margin-top: 10px;
     }
     .btn-download {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
-    .chapter-select {
-        width: 100%; /* Asegura que ocupe el ancho completo */
-    }
-}
-
-/* Para dispositivos móviles */
-@media (max-width: 576px) {
-    .navbar-custom .navbar-brand img {
-        width: 120px; /* Reduce el tamaño del logo */
-    }
-    .flipbook {
-        width: 95vw; /* Usa el 95% del ancho de la pantalla */
-    }
-    .container-center {
-        margin-top: 10px;
-    }
-    .btn-download {
-        font-size: 14px;
+        font-size: 10px;
         padding: 8px 16px;
     }
     .chapter-select {
@@ -159,4 +169,64 @@
     .chapter-select {
         width: 90%; /* Ocupa el ancho del contenedor */
     }
+}
+
+#highlight-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Permite que el canvas sea "transparente" para clics y desplazamientos */
+}
+
+/* Botón para activar lápiz y borrador*/
+#toggle-pencil, #toggle-eraser {
+    background: linear-gradient(90deg, #6a00ff, #4a00c4); /* Cambia el color del gradiente */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 5px; /* Espacio entre los botones */
+}
+
+#toggle-pencil:hover, #toggle-eraser:hover {
+    background: linear-gradient(90deg, #4a00c4, #3a00a2); /* Cambia el color al pasar el mouse */
+    transform: scale(1.05);
+}
+
+/* Responsividad para los botones de lápiz y borrador */
+@media (max-width: 768px) {
+    #toggle-pencil, #toggle-eraser {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    #toggle-pencil, #toggle-eraser {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}
+
+.drawing-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Solo se activa con el lápiz */
+}
+
+.container-center p {
+    font-size: 1em;
+    color: #333;
+    margin-top: 10px;
+    text-align: center;
 }
