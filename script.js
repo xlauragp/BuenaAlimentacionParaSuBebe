@@ -1,3 +1,6 @@
+// Variable para el nivel de zoom uniforme de todas las páginas
+let globalZoomLevel = 1;
+
 // Inicializa el flipbook y redimensiona los canvas según la pantalla
 function initFlipbook() {
     const aspectRatio = 1 / 1.4;
@@ -7,8 +10,8 @@ function initFlipbook() {
         ? Math.min(450, window.innerWidth * 0.95) 
         : Math.min(910, window.innerWidth * 0.9);
     const height = displayMode === 'single' 
-    ? Math.min(450, width / aspectRatio)
-    : Math.min(450, window.innerWidth * 0.9);
+        ? Math.min(450, width / aspectRatio)
+        : Math.min(450, window.innerWidth * 0.9);
 
     $("#flipbook").turn({
         width: width,
@@ -18,6 +21,11 @@ function initFlipbook() {
     });
 
     resizeCanvases(); // Redimensiona los canvas al inicializar
+
+    // Aplica el nivel de zoom global cuando se cambia de página
+    $("#flipbook").bind("turned", function() {
+        applyGlobalZoom();
+    });
 }
 
 // Inicializa el flipbook al cargar la página
@@ -47,18 +55,29 @@ $('#chapter-select').on('change', function() {
     resizeCanvases();
 });
 
-// Redimensiona cada canvas para que coincida con su página
+// Redimensiona cada canvas para que coincida con su página y ajusta al nivel de zoom global
 function resizeCanvases() {
     document.querySelectorAll("#flipbook .page .drawing-canvas").forEach(canvas => {
         const page = canvas.closest('.page');
+
         if (page) {
-            // Ajustar el canvas al tamaño del contenedor de la página
+            // Ajusta el canvas al tamaño de la página considerando el nivel de zoom
             canvas.width = page.offsetWidth;
             canvas.height = page.offsetHeight;
-            canvas.style.backgroundColor = 'rgba(255, 0, 0, 0.015)'; // Color temporal para depuración
+            canvas.style.transform = `scale(${globalZoomLevel})`; // Escala el canvas para que coincida con el zoom
+            canvas.style.transformOrigin = 'top left';
+            canvas.style.pointerEvents = isPencilActive || isEraserActive ? "auto" : "none"; // Habilita el resaltado
         }
-        canvas.style.backgroundColor = 'rgba(255, 0, 0, 0.015)'; // Color para depuración
     });
+}
+
+// Aplica el nivel de zoom global a todas las páginas
+function applyGlobalZoom() {
+    document.querySelectorAll("#flipbook .page img").forEach(img => {
+        img.style.transform = `scale(${globalZoomLevel})`;
+        img.style.transformOrigin = "center center";
+    });
+    resizeCanvases(); // Asegura que los canvas se ajusten al nuevo nivel de zoom
 }
 
 // Variables de herramientas
@@ -78,8 +97,8 @@ const translations = {
         deactivateEraser: "Desactivar Borrador"
     },
     en: {
-        activatePencil: "Activate Highliter",
-        deactivatePencil: "Deactivate Highliter",
+        activatePencil: "Activate Highlighter",
+        deactivatePencil: "Deactivate Highlighter",
         activateEraser: "Activate Eraser",
         deactivateEraser: "Deactivate Eraser"
     }
@@ -142,7 +161,7 @@ function draw(e, ctx, canvas) {
     if (isPencilActive) {
         ctx.lineTo(x, y);
         ctx.strokeStyle = pencilColor;
-        ctx.lineWidth = pencilSize;
+        ctx.lineWidth = pencilSize / globalZoomLevel; // Ajusta el tamaño del lápiz con el nivel de zoom
         ctx.stroke();
     } else if (isEraserActive) {
         ctx.clearRect(x - eraserSize / 2, y - eraserSize / 2, eraserSize, eraserSize);
@@ -161,9 +180,9 @@ function getEventPosition(e, canvas) {
     const rect = canvas.getBoundingClientRect();
     const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
     const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-    console.log("Posición de dibujo:", x, y); // Para depuración
-    return [x, y];
+    return [x / globalZoomLevel, y / globalZoomLevel]; // Ajusta la posición según el nivel de zoom
 }
+
 // Ajusta el tamaño del lápiz y del borrador
 document.getElementById("pencil-size").addEventListener("input", (event) => {
     pencilSize = event.target.value;
@@ -173,4 +192,8 @@ document.getElementById("eraser-size").addEventListener("input", (event) => {
     eraserSize = event.target.value;
 });
 
-
+// Evento para actualizar el nivel de zoom cuando el usuario mueve el control deslizante
+document.getElementById("zoom-slider").addEventListener("input", (event) => {
+    globalZoomLevel = parseFloat(event.target.value);
+    applyGlobalZoom();
+});

@@ -10,12 +10,12 @@
 #flipbook .page {
     width: 100%; /* Ocupa el ancho completo del contenedor flipbook */
     height: auto;
+    overflow: hidden;
     aspect-ratio: 1 / 1.4; /* Mantiene la proporción de la página */
     border: 2px solid #ddd;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    background: url('Turn.js-4th-release/samples/docs/pics/left-border.png') left top no-repeat,
-                url('Turn.js-4th-release/samples/docs/pics/right-border.png') right top no-repeat;
-    background-size: cover;
+    background: #ddd;
+    background-size: contain;
 }
 
 .flipbook {
@@ -140,9 +140,7 @@
     z-index: 10; /* Asegura que el canvas esté encima de la imagen de fondo */
 }
 
-.drawing-canvas {
-    pointer-events: auto; /* Cambia temporalmente para verificar si responde a eventos */
-}
+
 
 /* Botón para activar lápiz y borrador*/
 #toggle-pencil, #toggle-eraser {
@@ -340,3 +338,99 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 
+
+
+
+/* Control de zoom */
+.zoom-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+/* Etiqueta de zoom */
+.zoom-control label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0;
+}
+
+/* Slider de zoom */
+.zoom-control input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Estilo del slider para pantallas grandes */
+.zoom-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 18px;
+    width: 18px;
+    background-color: #007bff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.zoom-control input[type="range"]::-moz-range-thumb {
+    height: 18px;
+    width: 18px;
+    background-color: #007bff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Responsividad del control de zoom */
+@media (max-width: 768px) {
+    .zoom-control {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .zoom-control label {
+        font-size: 1rem;
+    }
+
+    .zoom-control input[type="range"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .zoom-control label {
+        font-size: 0.9rem;
+    }
+}
+
+#flipbook .page img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Mantiene la proporción de la imagen dentro del contenedor */
+    transition: transform 0.2s ease; /* Suaviza el efecto de zoom */
+    pointer-events: none; /* Desactiva interacciones para mejorar el rendimiento */
+    border: 2px solid #ddd;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff; /* Fondo blanco */
+}
+
+/* Ajuste adicional para modo "single" */
+#flipbook.single .page {
+    background: url('Turn.js-4th-release/samples/docs/pics/paper-texture.png') center center no-repeat;
+    background-size: cover;
+    border-radius: 4px;
+}
+
+/* Ajuste adicional para modo "double" */
+#flipbook.double .page {
+    background: url('Turn.js-4th-release/samples/docs/pics/left-border.png') left top no-repeat,
+                url('Turn.js-4th-release/samples/docs/pics/right-border.png') right top no-repeat;
+    background-size: contain;
+    border-radius: 0;
+}
