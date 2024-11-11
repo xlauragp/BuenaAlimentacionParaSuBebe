@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <script src="Turn.js-4th-release/lib/turn.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <style>
         .navbar-custom {
             background-color: #7d416d; /* Color de fondo similar al de tu imagen */
@@ -173,7 +174,11 @@
                 <input type="range" id="eraser-size" min="10" max="100" value="20">
             </div>
         </div>
-        <a href="libro.pdf" class="btn-download" download>Descargar PDF del Libro</a>
+        <button id="pay-and-download-button" class="download">Pagar y Descargar PDF</button>
+    </div>
+
+    <div class="container-center">
+
     </div>
     
     <!-- JavaScript de Bootstrap -->

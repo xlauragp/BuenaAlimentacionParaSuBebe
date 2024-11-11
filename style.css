@@ -40,7 +40,7 @@
 }
 
 /* Botón para descargar PDF */
-.btn-download {
+#pay-and-download-button {
     background: linear-gradient(90deg, #007bff, #0056b3);
     color: white;
     border: none;
@@ -51,7 +51,7 @@
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.btn-download:hover {
+#pay-and-download-button:hover {
     background: linear-gradient(90deg, #0056b3, #004085);
     transform: scale(1.05);
 }
@@ -144,7 +144,7 @@
 
 /* Botón para activar lápiz y borrador*/
 #toggle-pencil, #toggle-eraser {
-    background: linear-gradient(90deg, #6a00ff, #4a00c4); /* Cambia el color del gradiente */
+    background: linear-gradient(90deg, #7a24f4, #4a00c4); /* Cambia el color del gradiente */
     color: white;
     border: none;
     padding: 12px 24px;
@@ -153,7 +153,6 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: background 0.3s ease, transform 0.2s ease;
     cursor: pointer;
-    font-weight: bold;
     margin: 5px; /* Espacio entre los botones */
 }
 
@@ -280,7 +279,7 @@ input[type="range"]::-moz-range-thumb:hover {
     .container-center {
         margin-top: 10px;
     }
-    .btn-download {
+    #pay-and-download-button {
         font-size: 12px;
         padding: 8px 16px;
     }

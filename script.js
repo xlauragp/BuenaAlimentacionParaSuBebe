@@ -1,5 +1,9 @@
 // Variable para el nivel de zoom uniforme de todas las páginas
 let globalZoomLevel = 1;
+let isDragging = false;
+let startX, startY;
+let translateX = 0;
+let translateY = 0;
 
 // Inicializa el flipbook y redimensiona los canvas según la pantalla
 function initFlipbook() {
@@ -46,6 +50,10 @@ $(document).ready(function() {
         
         resizeCanvases();
     });
+    // Evento para manejar el inicio del arrastre
+    $("#flipbook").on("mousedown touchstart", startDragging);
+    $(document).on("mousemove touchmove", dragImage);
+    $(document).on("mouseup touchend", stopDragging);
 });
 
 // Cambia de página según el capítulo seleccionado
@@ -54,6 +62,37 @@ $('#chapter-select').on('change', function() {
     $("#flipbook").turn("page", page);
     resizeCanvases();
 });
+
+// Inicia el arrastre de la imagen solo si el nivel de zoom es mayor a 1 y el lápiz no está activo
+function startDragging(event) {
+    if (globalZoomLevel > 1 && !isPencilActive && !isEraserActive) {
+        isDragging = true;
+        startX = event.pageX || event.originalEvent.touches[0].pageX;
+        startY = event.pageY || event.originalEvent.touches[0].pageY;
+    }
+}
+
+// Arrastra la imagen
+function dragImage(event) {
+    if (!isDragging) return;
+    
+    event.preventDefault();
+    const x = event.pageX || event.originalEvent.touches[0].pageX;
+    const y = event.pageY || event.originalEvent.touches[0].pageY;
+    
+    translateX += (x - startX) / globalZoomLevel;
+    translateY += (y - startY) / globalZoomLevel;
+    
+    applyGlobalZoom();
+    
+    startX = x;
+    startY = y;
+}
+
+// Detiene el arrastre de la imagen
+function stopDragging() {
+    isDragging = false;
+}
 
 // Redimensiona cada canvas para que coincida con su página y ajusta al nivel de zoom global
 function resizeCanvases() {
@@ -71,10 +110,17 @@ function resizeCanvases() {
     });
 }
 
-// Aplica el nivel de zoom global a todas las páginas
+// Aplica el nivel de zoom y la posición de arrastre a todas las páginas
 function applyGlobalZoom() {
     document.querySelectorAll("#flipbook .page img").forEach(img => {
-        img.style.transform = `scale(${globalZoomLevel})`;
+        if (globalZoomLevel > 1) {
+            img.style.transform = `scale(${globalZoomLevel}) translate(${translateX}px, ${translateY}px)`;
+        } else {
+            // Restaura la imagen a su posición original si el zoom es 1
+            img.style.transform = `scale(1)`;
+            translateX = 0;
+            translateY = 0;
+        }
         img.style.transformOrigin = "center center";
     });
     resizeCanvases(); // Asegura que los canvas se ajusten al nuevo nivel de zoom
@@ -196,4 +242,48 @@ document.getElementById("eraser-size").addEventListener("input", (event) => {
 document.getElementById("zoom-slider").addEventListener("input", (event) => {
     globalZoomLevel = parseFloat(event.target.value);
     applyGlobalZoom();
+});
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+document.addEventListener("DOMContentLoaded", () => {
+    const stripe = Stripe("tu_stripe_public_key"); // Reemplaza con tu clave pública de Stripe
+    const payAndDownloadButton = document.getElementById("pay-and-download-button");
+
+    payAndDownloadButton.addEventListener("click", initiatePayment);
+
+    // Iniciar el proceso de pago
+    async function initiatePayment() {
+        try {
+            const response = await fetch("/create-payment-intent", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            });
+            const { clientSecret } = await response.json();
+
+            const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: { token: "tok_visa" }, // Para pruebas, usa "tok_visa" de Stripe
+                },
+            });
+
+            if (error) {
+                alert("Error en el pago: " + error.message);
+            } else if (paymentIntent.status === 'succeeded') {
+                enableDownload();
+            }
+        } catch (error) {
+            console.error("Error en el proceso de pago:", error);
+        }
+    }
+
+    // Habilitar la descarga después del pago
+    function enableDownload() {
+        payAndDownloadButton.textContent = "Descargar PDF del Libro";
+        payAndDownloadButton.removeEventListener("click", initiatePayment);
+        payAndDownloadButton.addEventListener("click", () => {
+            window.location.href = "libro.pdf"; // Ruta del archivo PDF
+        });
+    }
 });
