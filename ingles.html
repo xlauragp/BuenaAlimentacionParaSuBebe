@@ -157,19 +157,27 @@
         </div>
         <!-- Texto debajo del libro -->
         <div class="container-center">
-            <p>Click on the book borders</p>
+            <p>Click or drag on the book borders</p>
         </div>
     </div>
-    
+
     <div class="container-center">
         <!-- Botón para activar y desactivar el lápiz -->
         <div class="toolbar">
             <button id="toggle-pencil">Activate Highlighter</button>
             <button id="toggle-eraser">Activate Eraser</button>
+            <div class="tool-controls">
+                <label for="pencil-size">Highlighter Size:</label>
+                <input type="range" id="pencil-size" min="1" max="50" value="10">
+            </div>
+            <div class="tool-controls">    
+                <label for="eraser-size">Eraser Size:</label>
+                <input type="range" id="eraser-size" min="10" max="100" value="20">
+            </div>
         </div>
         <a href="libro_ing.pdf" class="btn-download" download>Download book PDF</a>
-    </div>
-       
+    </div>  
+
     </div>
     <!-- JavaScript de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>

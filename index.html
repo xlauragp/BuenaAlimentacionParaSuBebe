@@ -85,7 +85,7 @@
 
     <div class="container-center">
         <div id="flipbook">
-            <div class="hard"><img src="output_images/img1.jpg" alt="Página 1"><canvas class="drawing-canvas"></canvas></div>
+            <div class="hard"><img src="output_images/img1.jpg" alt="Página 1"></div>
             <div class="page"><img src="output_images/img3.jpg" alt="Página 2"><canvas class="drawing-canvas"></canvas></div>
             <div class="page"><img src="output_images/img4.jpg" alt="Página 3"><canvas class="drawing-canvas"></canvas></div>
             <div class="page"><img src="output_images/img5.jpg" alt="Página 4"><canvas class="drawing-canvas"></canvas></div>
@@ -153,15 +153,23 @@
         </div>
         <!-- Texto debajo del libro -->
         <div class="container-center">
-            <p>Click en los bordes del libro</p>
+            <p>Click o arrastre en los bordes del libro</p>
         </div>
     </div>
     
     <div class="container-center">
         <!-- Botón para activar y desactivar el lápiz -->
         <div class="toolbar">
-            <button id="toggle-pencil">Activar Lápiz</button>
+            <button id="toggle-pencil">Activar Resaltador</button>
             <button id="toggle-eraser">Activar Borrador</button>
+            <div class="tool-controls">
+                <label for="pencil-size">Tamaño Resaltador:</label>
+                <input type="range" id="pencil-size" min="1" max="50" value="10">
+            </div>
+            <div class="tool-controls">    
+                <label for="eraser-size">Tamaño Borrador:</label>
+                <input type="range" id="eraser-size" min="10" max="100" value="20">
+            </div>
         </div>
         <a href="libro.pdf" class="btn-download" download>Descargar PDF del Libro</a>
     </div>
