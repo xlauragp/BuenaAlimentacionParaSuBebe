@@ -160,17 +160,19 @@
             </button>
         </div>
         <!-- Texto debajo del libro -->
-
         <p>Click o arrastre en las esquinas del libro</p>
-        <label for="zoom-slider" class="mr-2">Zoom:</label>
-        <input type="range" id="zoom-slider" min="1" max="2" step="0.1" value="1" class="form-control-range">
-    </div>
-    
-    <div class="container-center">
-        <!-- Botón para activar y desactivar el lápiz -->
+        <!-- Control de Zoom -->
         <div class="toolbar">
-            <button id="toggle-pencil">Activar Resaltador</button>
-            <button id="toggle-eraser">Activar Borrador</button>
+            <label for="zoom-slider">Zoom:</label>
+            <input type="range" id="zoom-slider" min="1" max="2" step="0.1" value="1">
+            
+            <!-- Botones de Activar Resaltador y Borrador -->
+            <div class="button-group">
+                <button id="toggle-pencil">Activar Resaltador</button>
+                <button id="toggle-eraser">Activar Borrador</button>
+            </div>
+            
+            <!-- Control de Tamaño del Resaltador y Borrador -->
             <div class="tool-controls">
                 <label for="pencil-size">Tamaño Resaltador:</label>
                 <input type="range" id="pencil-size" min="1" max="50" value="10">
