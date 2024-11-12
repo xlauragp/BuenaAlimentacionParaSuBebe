@@ -40,7 +40,7 @@
 }
 
 /* Botón para descargar PDF */
-#pay-and-download-button {
+.btn-download {
     background: linear-gradient(90deg, #007bff, #0056b3);
     color: white;
     border: none;
@@ -51,7 +51,7 @@
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
-#pay-and-download-button:hover {
+.btn-download:hover {
     background: linear-gradient(90deg, #0056b3, #004085);
     transform: scale(1.05);
 }
@@ -279,7 +279,7 @@ input[type="range"]::-moz-range-thumb:hover {
     .container-center {
         margin-top: 10px;
     }
-    #pay-and-download-button {
+    .btn-download {
         font-size: 12px;
         padding: 8px 16px;
     }
