@@ -40,6 +40,13 @@ function initFlipbook() {
             applyGlobalZoom();
         }
     });
+
+    $("#flipbook").on("turning", function(event, page) {
+    if (isPencilActive || isEraserActive || isDrawing) {
+        event.preventDefault(); // Bloquea el cambio de página
+        showDrawingAlert(); // Muestra alerta si está subrayando
+    }
+});
 }
 
 // Inicializa el flipbook al cargar la página
