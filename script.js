@@ -26,9 +26,19 @@ function initFlipbook() {
 
     resizeCanvases(); // Redimensiona los canvas al inicializar
 
+    // Bloquea el cambio de página mientras el usuario está subrayando
+    $("#flipbook").on("start", function(event, pageObject, corner) {
+        if (isPencilActive || isEraserActive || isDrawing) {
+            event.preventDefault(); // Bloquea el evento de cambio de página
+            showDrawingAlert(); // Muestra alerta si está subrayando
+        }
+    });
+    
     // Aplica el nivel de zoom global cuando se cambia de página
     $("#flipbook").bind("turned", function() {
-        applyGlobalZoom();
+        if (!(isPencilActive || isEraserActive || isDrawing)) {
+            applyGlobalZoom();
+        }
     });
 }
 
@@ -37,18 +47,20 @@ $(document).ready(function() {
     initFlipbook();
 
     $(window).on('resize', function() {
-        const displayMode = window.innerWidth < 800 ? 'single' : 'double';
-        const width = displayMode === 'single' 
-            ? Math.min(450, window.innerWidth * 0.95) 
-            : Math.min(900, window.innerWidth * 0.9);
-        const height = displayMode === 'single' 
-        ? Math.min(450, width / (1 / 1.4))
-        : Math.min(450, width / (1 / 1.4));
+        if (!isDrawing) { 
+            const displayMode = window.innerWidth < 800 ? 'single' : 'double';
+            const width = displayMode === 'single' 
+                ? Math.min(450, window.innerWidth * 0.95) 
+                : Math.min(900, window.innerWidth * 0.9);
+            const height = displayMode === 'single' 
+            ? Math.min(450, width / (1 / 1.4))
+            : Math.min(450, width / (1 / 1.4));
 
-        $("#flipbook").turn("size", width, height);
-        $("#flipbook").turn("display", displayMode);
-        
-        resizeCanvases();
+            $("#flipbook").turn("size", width, height);
+            $("#flipbook").turn("display", displayMode);
+            
+            resizeCanvases();
+        }
     });
     // Evento para manejar el inicio del arrastre
     $("#flipbook").on("mousedown touchstart", startDragging);
@@ -167,10 +179,19 @@ document.getElementById("toggle-eraser").addEventListener("click", () => {
     updateToolState();
 });
 
-// Actualiza el estado de las herramientas
+// Actualiza el estado de las herramientas// Actualiza el estado de las herramientas y muestra la alerta si el resaltador o borrador están activos
 function updateToolState() {
     document.getElementById("toggle-pencil").textContent = isPencilActive ? translations[lang].deactivatePencil : translations[lang].activatePencil;
     document.getElementById("toggle-eraser").textContent = isEraserActive ? translations[lang].deactivateEraser : translations[lang].activateEraser;
+    
+    // Mostrar u ocultar la alerta
+    const alertDrawingActive = document.getElementById("alert-drawing-active");
+    if (isPencilActive || isEraserActive) {
+        alertDrawingActive.style.display = 'block';
+    } else {
+        alertDrawingActive.style.display = 'none';
+    }
+
     document.querySelectorAll("#flipbook .page .drawing-canvas").forEach(canvas => {
         canvas.style.pointerEvents = isPencilActive || isEraserActive ? "auto" : "none";
     });

@@ -180,7 +180,7 @@
 .container-center p {
     font-size: 1em;
     color: #333;
-    margin-top: 2px;
+    margin-top: 15px;
     text-align: center;
 }
 
@@ -345,7 +345,7 @@ input[type="range"]::-moz-range-thumb:hover {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
 /* Etiqueta de zoom */
@@ -433,3 +433,4 @@ input[type="range"]::-moz-range-thumb:hover {
     background-size: contain;
     border-radius: 0;
 }
+
