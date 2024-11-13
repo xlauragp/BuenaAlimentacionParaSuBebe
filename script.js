@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Llama a la función con un retraso de 300 ms entre cada imagen
-    loadImagesWithDelay(300);
+    loadImagesWithDelay(100);
 });
 // Evento para el inicio del toque con múltiples dedos
 document.getElementById("flipbook").addEventListener("touchstart", (e) => {
