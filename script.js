@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Llama a la función con un retraso
-    loadImagesWithDelay(0.00001);
+    loadImagesWithDelay(0.000000000001);
 });
 
 // Función para cargar imágenes con un retraso
