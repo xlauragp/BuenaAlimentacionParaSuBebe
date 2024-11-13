@@ -6,6 +6,9 @@ let translateX = 0;
 let translateY = 0;
 // Variable para almacenar la página que está siendo arrastrada
 let draggingPage = null;
+//Para el touch
+let initialPinchDistance = null;
+let initialZoomLevel = globalZoomLevel;
 
 document.addEventListener("DOMContentLoaded", () => {
     function loadImagesWithDelay(delay) {
@@ -19,9 +22,66 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Llama a la función con un retraso
-    loadImagesWithDelay(0.000000000001);
+    // Llama a la función con un retraso de 300 ms entre cada imagen
+    loadImagesWithDelay(300);
 });
+// Evento para el inicio del toque con múltiples dedos
+document.getElementById("flipbook").addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) {
+        initialPinchDistance = calculatePinchDistance(e);
+        initialZoomLevel = globalZoomLevel;
+        if (globalZoomLevel > 1) {
+            document.body.classList.add("no-scroll"); // Desactiva el scroll de la página si está en zoom
+        }
+    }
+});
+
+// Evento para manejar el cambio de distancia entre dos dedos y aplicar el zoom
+document.getElementById("flipbook").addEventListener("touchmove", (e) => {
+    if (e.touches.length === 2 && initialPinchDistance !== null) {
+        e.preventDefault();
+        
+        const currentPinchDistance = calculatePinchDistance(e);
+        const pinchRatio = currentPinchDistance / initialPinchDistance;
+        globalZoomLevel = Math.min(3, Math.max(1, initialZoomLevel * pinchRatio)); // Limita el zoom entre 1 y 3
+        
+        applyGlobalZoom();
+
+        // Activa la clase no-scroll si el zoom es mayor a 1
+        if (globalZoomLevel > 1) {
+            document.body.classList.add("no-scroll");
+        } else {
+            document.body.classList.remove("no-scroll");
+        }
+    }
+});
+
+// Función para calcular la distancia entre dos dedos
+function calculatePinchDistance(e) {
+    const [touch1, touch2] = [e.touches[0], e.touches[1]];
+    return Math.sqrt(
+        Math.pow(touch2.pageX - touch1.pageX, 2) +
+        Math.pow(touch2.pageY - touch1.pageY, 2)
+    );
+}
+
+// Evento adicional para bloquear el desplazamiento al mover la imagen en estado de zoom
+document.getElementById("flipbook").addEventListener("touchmove", (e) => {
+    if (globalZoomLevel > 1 && e.touches.length === 1) { // Cuando el usuario mueve la imagen en estado de zoom
+        e.preventDefault(); // Previene el desplazamiento de la página al arrastrar la imagen
+    }
+});
+
+// Evento para finalizar el pinch-to-zoom
+document.getElementById("flipbook").addEventListener("touchend", (e) => {
+    if (e.touches.length < 2) {
+        initialPinchDistance = null; // Reinicia el valor inicial de la distancia
+        if (globalZoomLevel <= 1) {
+            document.body.classList.remove("no-scroll"); // Restaura el scroll de la página si el zoom es 1
+        }
+    }
+});
+
 
 // Función para cargar imágenes con un retraso
 function loadImagesWithDelay(delay) {
@@ -233,6 +293,12 @@ function applyGlobalZoom() {
         img.style.transformOrigin = "center center";
     });
     resizeCanvases(); // Asegura que los canvas se ajusten al nuevo nivel de zoom
+    
+    // Sincroniza el slider de zoom en la computadora
+    const zoomSlider = document.getElementById("zoom-slider");
+    if (zoomSlider) {
+        zoomSlider.value = globalZoomLevel;
+    }
 }
 
 // Variables de herramientas
@@ -365,7 +431,7 @@ document.getElementById("zoom-slider").addEventListener("input", (event) => {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 document.addEventListener("DOMContentLoaded", () => {
     const stripe = Stripe("tu_stripe_public_key"); // Reemplaza con tu clave pública de Stripe
     const payAndDownloadButton = document.getElementById("pay-and-download-button");
@@ -405,4 +471,4 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "libro.pdf"; // Ruta del archivo PDF
         });
     }
-});
+});*/

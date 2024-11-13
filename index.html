@@ -68,7 +68,7 @@
     </nav>
         
     <!-- Selector de capítulos con estilo Bootstrap -->
-    <div class="container-center text-center mt-4">
+    <div class="container-center text-center mt-2">
         <div class="d-flex justify-content-center align-items-center stylish-selector">
             <label for="chapter-select" class="form-label mb-0 mr-2">Capítulo:</label>
             <select id="chapter-select" class="form-control chapter-select">
@@ -86,7 +86,7 @@
 
     <div class="container-center">
         <div id="flipbook">
-            <div class="hard"><img data-src="output_images/img1.jpg" src="placeholder.jpg" alt="Página 1"></div>
+            <div class="page"><img data-src="output_images/img1.jpg" src="placeholder.jpg" alt="Página 1"></div>
             <div class="page"><img data-src="output_images/img3.jpg" src="placeholder.jpg" alt="Página 2"><canvas class="drawing-canvas"></canvas></div>
             <div class="page"><img data-src="output_images/img4.jpg" src="placeholder.jpg" alt="Página 3"><canvas class="drawing-canvas"></canvas></div>
             <div class="page"><img data-src="output_images/img5.jpg" src="placeholder.jpg" alt="Página 4"><canvas class="drawing-canvas"></canvas></div>
@@ -159,30 +159,31 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <!-- Texto debajo del libro -->
-        <p>Click o arrastre en las esquinas del libro</p>
+        
         <!-- Control de Zoom -->
         <div class="toolbar">
+            <!-- Texto debajo del libro -->
+            <p>Click o arrastre en las esquinas del libro</p>
             <label for="zoom-slider">Zoom:</label>
             <input type="range" id="zoom-slider" min="1" max="2" step="0.1" value="1">
             
             <!-- Botones de Activar Resaltador y Borrador -->
-            <div class="button-group">
+            <div class="button-group mt-1">
                 <button id="toggle-pencil">Activar Resaltador</button>
                 <button id="toggle-eraser">Activar Borrador</button>
             </div>
             
             <!-- Control de Tamaño del Resaltador y Borrador -->
-            <div class="tool-controls">
+            <div class="tool-controls mt-3">
                 <label for="pencil-size">Tamaño Resaltador:</label>
                 <input type="range" id="pencil-size" min="1" max="50" value="10">
             </div>
-            <div class="tool-controls">    
+            <div class="tool-controls mt-2">    
                 <label for="eraser-size">Tamaño Borrador:</label>
                 <input type="range" id="eraser-size" min="10" max="100" value="20">
             </div>
         </div>
-        <a href="libro.pdf" class="btn-download" style="margin-bottom: 20px;" download>Descargar PDF del Libro</a>
+        <a href="libro.pdf" class="btn-download mt-2 mb-5" download>Descargar PDF del Libro</a>
     </div>
     
     <!-- JavaScript de Bootstrap -->

@@ -6,6 +6,11 @@
     width: 100vw;
 }
 
+.no-scroll {
+    overflow: hidden;
+    height: 100%;
+}
+
 /* Página del flipbook */
 #flipbook .page {
     width: 100%; /* Ocupa el ancho completo del contenedor flipbook */
