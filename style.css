@@ -78,6 +78,7 @@
 .navbar-custom {
     background-color: #4B2A42; /* Color de fondo específico */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: auto;
 }
 
 .navbar-custom .navbar-brand img {

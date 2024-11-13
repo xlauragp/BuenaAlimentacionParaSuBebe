@@ -7,6 +7,39 @@ let translateY = 0;
 // Variable para almacenar la página que está siendo arrastrada
 let draggingPage = null;
 
+document.addEventListener("DOMContentLoaded", () => {
+    function loadImagesWithDelay(delay) {
+        const images = document.querySelectorAll("#flipbook img[data-src]");
+        
+        images.forEach((img, index) => {
+            setTimeout(() => {
+                img.src = img.getAttribute("data-src"); // Asigna el src real desde data-src
+                img.removeAttribute("data-src"); // Elimina data-src después de la carga para evitar recargas accidentales
+            }, delay * index); // Aplica el retraso para cada imagen en secuencia
+        });
+    }
+
+    // Llama a la función con un retraso
+    loadImagesWithDelay(0.00001);
+});
+
+// Función para cargar imágenes con un retraso
+function loadImagesWithDelay(delay) {
+    // Obtiene todas las imágenes dentro del flipbook que tienen el atributo data-src
+    const images = document.querySelectorAll("#flipbook .page img[data-src]");
+    
+    // Aplica un retraso antes de cargar cada imagen
+    setTimeout(() => {
+        images.forEach(img => {
+            img.src = img.getAttribute("data-src"); // Asigna el src real desde data-src
+            img.removeAttribute("data-src"); // Elimina el atributo data-src después de la carga
+        });
+    }, delay);
+}
+
+// Llama a la función con un retraso de 2 segundos (2000 ms)
+loadImagesWithDelay(1000000);
+
 // Inicializa el flipbook y redimensiona los canvas según la pantalla
 function initFlipbook() {
     const aspectRatio = 1 / 1.4;
