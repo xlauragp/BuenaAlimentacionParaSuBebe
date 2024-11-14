@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Llama a la función con un retraso de 300 ms entre cada imagen
-    loadImagesWithDelay(100);
+    loadImagesWithDelay(0);
 });
 // Evento para el inicio del toque con múltiples dedos
 document.getElementById("flipbook").addEventListener("touchstart", (e) => {
@@ -81,24 +81,6 @@ document.getElementById("flipbook").addEventListener("touchend", (e) => {
         }
     }
 });
-
-
-// Función para cargar imágenes con un retraso
-function loadImagesWithDelay(delay) {
-    // Obtiene todas las imágenes dentro del flipbook que tienen el atributo data-src
-    const images = document.querySelectorAll("#flipbook .page img[data-src]");
-    
-    // Aplica un retraso antes de cargar cada imagen
-    setTimeout(() => {
-        images.forEach(img => {
-            img.src = img.getAttribute("data-src"); // Asigna el src real desde data-src
-            img.removeAttribute("data-src"); // Elimina el atributo data-src después de la carga
-        });
-    }, delay);
-}
-
-// Llama a la función con un retraso de 2 segundos (2000 ms)
-loadImagesWithDelay(1000000);
 
 // Inicializa el flipbook y redimensiona los canvas según la pantalla
 function initFlipbook() {
