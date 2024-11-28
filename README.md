@@ -106,4 +106,4 @@ Esta aplicación fue desarrollada por **Laura Fernanda Gómez Perdomo** en colab
 ## **Contacto**  
 Si tienes dudas o necesitas soporte técnico:  
 - **Hospital Infantil de las Californias**  
-- Página web: [www.hospitalinfantil.org](#)  
+- Página web: [www.hospitalinfantil.org]  
