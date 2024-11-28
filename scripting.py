@@ -2,14 +2,14 @@ from PIL import Image
 import os
 
 # Directorios de entrada y salida
-input_folder = 'paginas_ing'  # Cambia a tu directorio de imágenes
+input_folder = 'paginas_ing'  
 output_folder = 'output_images_ing'
 
 # Crear la carpeta de salida si no existe
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
-# Define la región de recorte (ajusta los valores de acuerdo con el recorte que necesites)
+# Define la región de recorte 
 crop_region = (2, 8, 1760, 1860)
 
 # Procesar todas las imágenes en el directorio de entrada
