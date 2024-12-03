@@ -305,7 +305,7 @@ let isEraserActive = false;
 let isDrawing = false;
 let pencilSize = 10;
 let eraserSize = 20;
-const pencilColor = "rgba(255, 235, 59, 0.015)";
+const pencilColor = "rgba(255, 235, 59, 0.01)";
 
 // Traducciones de idiomas
 const translations = {
