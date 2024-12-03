@@ -10,27 +10,25 @@ let draggingPage = null;
 let initialPinchDistance = null;
 let initialZoomLevel = globalZoomLevel;
 
-document.addEventListener("DOMContentLoaded", () => {
-    function loadImagesWithDelay(delay) {
-        const images = document.querySelectorAll("#flipbook img[data-src]");
-        
-        images.forEach((img, index) => {
-            setTimeout(() => {
-                img.src = img.getAttribute("data-src"); // Asigna el src real desde data-src
-                img.removeAttribute("data-src"); // Elimina data-src después de la carga para evitar recargas accidentales
-            }, delay * index); // Aplica el retraso para cada imagen en secuencia
-        });
-    }
+// Selecciona el canvas
+const canvas = document.getElementById("canvas");
 
-    // Llama a la función con un retraso de 300 ms entre cada imagen
-    loadImagesWithDelay(0);
-});
+// Función para verificar si el toque está dentro del canvas
+function isTouchOnCanvas(event) {
+    const rect = canvas.getBoundingClientRect(); // Obtiene la posición y tamaño del canvas
+    const touchX = event.touches[0].clientX; // Posición X del toque
+    const touchY = event.touches[0].clientY; // Posición Y del toque
+
+    // Verifica si el toque está dentro de los límites del canvas
+    return touchX >= rect.left && touchX <= rect.right && touchY >= rect.top && touchY <= rect.bottom;
+}
+
 // Evento para el inicio del toque con múltiples dedos
 document.getElementById("flipbook").addEventListener("touchstart", (e) => {
     if (e.touches.length === 2) {
         initialPinchDistance = calculatePinchDistance(e);
         initialZoomLevel = globalZoomLevel;
-        if (globalZoomLevel > 1) {
+        if ((globalZoomLevel > 1) && e.touches.length === 1 && isTouchOnCanvas(e)) {
             document.body.classList.add("no-scroll"); // Desactiva el scroll de la página si está en zoom
         }
     }
@@ -81,6 +79,24 @@ document.getElementById("flipbook").addEventListener("touchend", (e) => {
         }
     }
 });
+
+
+// Función para cargar imágenes con un retraso
+function loadImagesWithDelay(delay) {
+    // Obtiene todas las imágenes dentro del flipbook que tienen el atributo data-src
+    const images = document.querySelectorAll("#flipbook .page img[data-src]");
+    
+    // Aplica un retraso antes de cargar cada imagen
+    setTimeout(() => {
+        images.forEach(img => {
+            img.src = img.getAttribute("data-src"); // Asigna el src real desde data-src
+            img.removeAttribute("data-src"); // Elimina el atributo data-src después de la carga
+        });
+    }, delay);
+}
+
+// Llama a la función con un retraso de 2 segundos (2000 ms)
+loadImagesWithDelay(0);
 
 // Inicializa el flipbook y redimensiona los canvas según la pantalla
 function initFlipbook() {
@@ -360,6 +376,7 @@ function startDrawing(e, ctx, canvas) {
     e.preventDefault();
     isDrawing = true;
     ctx.beginPath();
+    ctx.globalAlpha = 0.2; // Incrementa la opacidad para reducir acumulación excesiva
     const [x, y] = getEventPosition(e, canvas);
     ctx.moveTo(x, y);
 }
